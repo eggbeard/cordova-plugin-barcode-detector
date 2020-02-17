@@ -198,23 +198,27 @@ public class CameraSourcePreview extends ViewGroup {
         // Computes height and width for potentially doing fit width.
         int childWidth = layoutWidth;
         int childHeight = (int)(((float) layoutWidth / (float) width) * height);
+        int offsetX = 0;
+        int offsetY = (int)((float)layoutHeight - (float)childHeight)/2;
 
         // If height is too tall using fit width, does fit height instead.
         if (childHeight > layoutHeight) {
             childHeight = layoutHeight;
             childWidth = (int)(((float) layoutHeight / (float) height) * width);
+            offsetX = (int)((float)layoutWidth - (float)childWidth)/2;
+            offsetY = 0;
         }
 
         for (int i = 0; i < getChildCount(); ++i) {
-            getChildAt(i).layout(0, 0, childWidth, childHeight);
+            getChildAt(i).layout(offsetX, offsetY, childWidth, childHeight);
         }
 
         // TODO
         // mViewFinderView.layout(layoutWidth/2 -actualWidth/2,layoutHeight/2 - actualHeight/2, layoutWidth/2 + actualWidth/2, layoutHeight/2 + actualHeight/2);
 
         int buttonSize = dpToPx(45);
-        int torchLeft = childWidth - (buttonSize * 2);
-        int torchTop = childHeight - (buttonSize * 2);
+        int torchLeft = layoutWidth - (buttonSize * 2);
+        int torchTop = layoutHeight - (buttonSize * 2);
 
         mTorchButton.layout(torchLeft, torchTop, torchLeft + buttonSize, torchTop + buttonSize);
 
