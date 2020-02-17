@@ -223,7 +223,13 @@ public class CameraSourcePreview extends ViewGroup {
         mSurfaceView.layout(offsetX, offsetY, childWidth + offsetX, childHeight + offsetY);
 
         // TODO
-        mViewFinderView.layout(200 + offsetX,200 + offsetY, childWidth + offsetX - 200, childHeight + offsetY - 200);
+        //mViewFinderView.layout(200 + offsetX,200 + offsetY, childWidth + offsetX - 200, childHeight + offsetY - 200);
+        //Draw a box to check for square
+        int l = 200 + offsetX;
+        int t = 200 + offsetY;
+        int r = l + 500;
+        int b = t + 500;
+        mViewFinderView.layout(l,t,r,b);
 
         int buttonSize = dpToPx(45);
         int torchLeft = layoutWidth - (buttonSize * 2);
