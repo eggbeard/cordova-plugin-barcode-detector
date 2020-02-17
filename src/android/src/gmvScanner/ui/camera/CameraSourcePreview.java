@@ -60,12 +60,16 @@ public class CameraSourcePreview extends ViewGroup {
         addView(mSurfaceView);
 
         mViewFinderView = new View(mContext);
-        mViewFinderView.setBackgroundResource(getResources().getIdentifier("rounded_rectangle", "drawable", mContext.getPackageName()));
+        mViewFinderView.setBackgroundResource(getResources().getIdentifier(
+            "rounded_rectangle", "drawable", mContext.getPackageName())
+        );
         mViewFinderView.layout(10,20, 100, 200);
         addView(mViewFinderView);
 
         mTorchButton = new Button(mContext);
-        mTorchButton.setBackgroundResource(getResources().getIdentifier("torch_inactive", "drawable", mContext.getPackageName()));
+        mTorchButton.setBackgroundResource(getResources().getIdentifier(
+            "torch_inactive", "drawable", mContext.getPackageName())
+        );
         mTorchButton.layout(0,0, dpToPx(45),dpToPx(45));
         mTorchButton.setMaxWidth(50);
         mTorchButton.setRotation(90);
@@ -83,11 +87,10 @@ public class CameraSourcePreview extends ViewGroup {
             }
         });
 
-
         addView(mTorchButton);
     }
 
-    public int dpToPx(int dp) {
+    private int dpToPx(int dp) {
         float density = mContext.getResources()
                 .getDisplayMetrics()
                 .density;
@@ -209,9 +212,10 @@ public class CameraSourcePreview extends ViewGroup {
             offsetY = 0;
         }
 
-        for (int i = 0; i < getChildCount(); ++i) {
-            getChildAt(i).layout(offsetX, offsetY, childWidth, childHeight);
-        }
+        // for (int i = 0; i < getChildCount(); ++i) {
+        //     getChildAt(i).layout(offsetX, offsetY, childWidth, childHeight);
+        // }
+        mSurfaceView.layout(offsetX, offsetY, childWidth, childHeight);
 
         // TODO
         // mViewFinderView.layout(layoutWidth/2 -actualWidth/2,layoutHeight/2 - actualHeight/2, layoutWidth/2 + actualWidth/2, layoutHeight/2 + actualHeight/2);
