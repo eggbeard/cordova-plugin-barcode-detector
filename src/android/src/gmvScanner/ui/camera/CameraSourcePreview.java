@@ -27,6 +27,7 @@ import android.view.SurfaceView;
 import android.view.ViewGroup;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.common.images.Size;
 
@@ -66,6 +67,15 @@ public class CameraSourcePreview extends ViewGroup {
         // left, top, right, bottom
         mViewFinderView.layout(100,100, 100, 100);
         addView(mViewFinderView);
+
+        debugText = new TextView(mContext);
+        debugText.setId(555);
+        debugText.layout(100, 100, 100, 100);
+        debugText.setText("test text");
+        debugText.setTextSize(12);
+        debugText.setTextColor(0xFF0000FF);
+        addView(debugText);
+
 
         mTorchButton = new Button(mContext);
         mTorchButton.setBackgroundResource(getResources().getIdentifier(
@@ -187,6 +197,9 @@ public class CameraSourcePreview extends ViewGroup {
                 previewHeight = size.getHeight();
             }
         }
+
+        debugText.setText("previewWidth: " + previewWidth + " previewHeight: " + previewHeight);
+
 
         // Swap width and height sizes when in portrait, since it will be rotated 90 degrees
         if (isPortraitMode()) {
