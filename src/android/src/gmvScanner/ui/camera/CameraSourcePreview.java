@@ -207,20 +207,22 @@ public class CameraSourcePreview extends ViewGroup {
         int childHeight = (int)((float)childWidth/previewAspectRatio);
 
         int offsetX = 0;
-        int offsetY = (int)((float)layoutHeight - (float)childHeight)/2;
+        int offsetY = 0;
+        //int offsetY = (int)((float)layoutHeight - (float)childHeight)/2;
 
         // If height is too tall using fit width, does fit height instead.
         if (childHeight > layoutHeight) {
             childHeight = layoutHeight;
             childWidth = (int)((float)childHeight * previewAspectRatio);
-            offsetX = (int)((float)layoutWidth - (float)childWidth)/2;
+            offsetX = 0;
+            //offsetX = (int)((float)layoutWidth - (float)childWidth)/2;
             offsetY = 0;
         }
 
-        // for (int i = 0; i < getChildCount(); ++i) {
-        //     getChildAt(i).layout(offsetX, offsetY, childWidth, childHeight);
-        // }
-        mSurfaceView.layout(offsetX, offsetY, childWidth + offsetX, childHeight + offsetY);
+        for (int i = 0; i < getChildCount(); ++i) {
+            getChildAt(i).layout(offsetX, offsetY, childWidth + offsetX, childHeight + offsetY);
+        }
+        //mSurfaceView.layout(offsetX, offsetY, childWidth + offsetX, childHeight + offsetY);
 
         // TODO
         //mViewFinderView.layout(200 + offsetX,200 + offsetY, childWidth + offsetX - 200, childHeight + offsetY - 200);
