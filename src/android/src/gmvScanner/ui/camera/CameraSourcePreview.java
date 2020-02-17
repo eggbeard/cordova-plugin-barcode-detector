@@ -205,7 +205,7 @@ public class CameraSourcePreview extends ViewGroup {
         // Computes height and width for potentially doing fit width.
         float scale = (float)layoutWidth/(float)previewWidth;
         int childWidth = layoutWidth;
-        int childHeight = scale * previewHeight;
+        int childHeight = (int)(scale * (float)previewHeight);
         int offsetX = 0;
         int offsetY = (int)((float)layoutHeight - (float)childHeight)/2;
 
@@ -213,7 +213,7 @@ public class CameraSourcePreview extends ViewGroup {
         if (childHeight > layoutHeight) {
             scale = (float)layoutHeight/(float)previewHeight;
             childHeight = layoutHeight;
-            childWidth = scale * previewWidth;
+            childWidth = (int)(scale * (float)previewWidth);
             offsetX = (int)((float)layoutWidth - (float)childWidth)/2;
             offsetY = 0;
         }
