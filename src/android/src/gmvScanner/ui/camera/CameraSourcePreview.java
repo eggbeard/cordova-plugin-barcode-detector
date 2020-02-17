@@ -63,7 +63,7 @@ public class CameraSourcePreview extends ViewGroup {
         mViewFinderView.setBackgroundResource(getResources().getIdentifier(
             "rounded_rectangle", "drawable", mContext.getPackageName())
         );
-        mViewFinderView.layout(100,200, 1000, 2000);
+        mViewFinderView.layout(100,200, 1070, 2150);
         addView(mViewFinderView);
 
         mTorchButton = new Button(mContext);
