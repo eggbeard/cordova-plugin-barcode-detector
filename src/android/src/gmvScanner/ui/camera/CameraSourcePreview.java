@@ -63,7 +63,8 @@ public class CameraSourcePreview extends ViewGroup {
         mViewFinderView.setBackgroundResource(getResources().getIdentifier(
             "rounded_rectangle", "drawable", mContext.getPackageName())
         );
-        mViewFinderView.layout(100,200, 1070, 2150);
+        // left, top, right, bottom
+        mViewFinderView.layout(100,100, 100, 100);
         addView(mViewFinderView);
 
         mTorchButton = new Button(mContext);
@@ -176,38 +177,43 @@ public class CameraSourcePreview extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        int width = 320;
-        int height = 240;
+        int previewWidth = 320;
+        int previewHeight = 240;
 
         if (mCameraSource != null) {
             Size size = mCameraSource.getPreviewSize();
             if (size != null) {
-                width = size.getWidth();
-                height = size.getHeight();
+                previewWidth = size.getWidth();
+                previewHeight = size.getHeight();
             }
         }
 
         // Swap width and height sizes when in portrait, since it will be rotated 90 degrees
         if (isPortraitMode()) {
-            int tmp = width;
+            int tmp = previewWidth;
             //noinspection SuspiciousNameCombination
-            width = height;
-            height = tmp;
+            previewWidth = previewHeight;
+            previewHeight = tmp;
         }
 
         final int layoutWidth = right - left;
         final int layoutHeight = bottom - top;
 
+        float previewAspectRatio = (float)previewWidth/(float)previewHeight;
+        float layoutAspectRatio = (float)width/(float)height;
+
         // Computes height and width for potentially doing fit width.
+        float scale = (float)layoutWidth/(float)previewWidth;
         int childWidth = layoutWidth;
-        int childHeight = (int)(((float) layoutWidth / (float) width) * height);
+        int childHeight = scale * previewHeight;
         int offsetX = 0;
         int offsetY = (int)((float)layoutHeight - (float)childHeight)/2;
 
         // If height is too tall using fit width, does fit height instead.
         if (childHeight > layoutHeight) {
+            scale = (float)layoutHeight/(float)previewHeight;
             childHeight = layoutHeight;
-            childWidth = (int)(((float) layoutHeight / (float) height) * width);
+            childWidth = scale * previewWidth;
             offsetX = (int)((float)layoutWidth - (float)childWidth)/2;
             offsetY = 0;
         }
@@ -215,10 +221,10 @@ public class CameraSourcePreview extends ViewGroup {
         // for (int i = 0; i < getChildCount(); ++i) {
         //     getChildAt(i).layout(offsetX, offsetY, childWidth, childHeight);
         // }
-        mSurfaceView.layout(offsetX, offsetY, childWidth, childHeight);
+        mSurfaceView.layout(offsetX, offsetY, childWidth + offsetX, childHeight + offsetY);
 
         // TODO
-        // mViewFinderView.layout(layoutWidth/2 -actualWidth/2,layoutHeight/2 - actualHeight/2, layoutWidth/2 + actualWidth/2, layoutHeight/2 + actualHeight/2);
+        mViewFinderView.layout(200 + offsetX,200 + offsetY, childWidth + offsetX - 200, childHeight + offsetY - 200);
 
         int buttonSize = dpToPx(45);
         int torchLeft = layoutWidth - (buttonSize * 2);
