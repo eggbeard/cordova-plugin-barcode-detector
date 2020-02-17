@@ -200,20 +200,19 @@ public class CameraSourcePreview extends ViewGroup {
         final int layoutHeight = bottom - top;
 
         float previewAspectRatio = (float)previewWidth/(float)previewHeight;
-        float layoutAspectRatio = (float)width/(float)height;
+        float layoutAspectRatio = (float)layoutWidth/(float)layoutHeight;
 
         // Computes height and width for potentially doing fit width.
-        float scale = (float)layoutWidth/(float)previewWidth;
         int childWidth = layoutWidth;
-        int childHeight = (int)(scale * (float)previewHeight);
+        int childHeight = (int)((float)childWidth/previewAspectRatio);
+
         int offsetX = 0;
         int offsetY = (int)((float)layoutHeight - (float)childHeight)/2;
 
         // If height is too tall using fit width, does fit height instead.
         if (childHeight > layoutHeight) {
-            scale = (float)layoutHeight/(float)previewHeight;
             childHeight = layoutHeight;
-            childWidth = (int)(scale * (float)previewWidth);
+            childWidth = (int)((float)childHeight * previewAspectRatio);
             offsetX = (int)((float)layoutWidth - (float)childWidth)/2;
             offsetY = 0;
         }
